@@ -9,7 +9,7 @@ import reducers from '../reducers';
 
 const logger = createLogger();
 
-const middleware = [thunk];
+const middleware = [thunk, logger];
 const store = compose(
   applyMiddleware(...middleware)
 )(createStore)(reducers);
