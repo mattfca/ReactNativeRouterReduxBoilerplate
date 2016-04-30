@@ -1,0 +1,9 @@
+Add routes to /src/containers/app
+
+Actions go into /src/actions
+
+Reducers are in /src/reducers
+
+Tabs can be added like the example TabOne using react-native-vector-icons
+
+redux-logger is turned on, use env variables to turn off for production
