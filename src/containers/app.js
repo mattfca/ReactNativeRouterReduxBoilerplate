@@ -3,9 +3,10 @@ import { createStore, applyMiddleware, combineReducers, compose } from 'redux';
 import { Provider, connect } from 'react-redux';
 import thunk from 'redux-thunk';
 import createLogger from 'redux-logger';
-import {Scene, Router, TabBar, Modal, Schema, Actions, Reducer, Switch} from 'react-native-router-flux'
+import { Scene, Router, TabBar, Modal, Schema, Actions, Reducer, Switch } from 'react-native-router-flux'
 
 import reducers from '../reducers';
+import { fetchAuthentication } from '../actions'
 
 const logger = createLogger();
 
@@ -15,6 +16,9 @@ const store = compose(
 )(createStore)(reducers);
 
 const RouterWithRedux = connect()(Router);
+
+
+//store.dispatch(fetchAuthentication())
 
 // Containers
 import Start from './start';
@@ -28,7 +32,7 @@ export default class App extends Component {
     return (
       <Provider store={store}>
         <RouterWithRedux>
-            <Scene key="modal" component={Modal}>
+            {/*<Scene key="modal" component={Modal}>
                 <Scene key="root">
                     <Scene key="start" 
                         component={Start} 
@@ -38,6 +42,24 @@ export default class App extends Component {
                         sceneStyle={styles.sceneStyle}
                          />
                 </Scene>
+                <Scene key="tabbar"
+                    tabs={true}
+                    tabBarStyle={styles.tabBarStyle}
+                >
+                    <Scene
+                        key="tabone"
+                        title="Tab 1"
+                        titleTab="Tab 1"
+                        iconName="ios-book"
+                        icon={TabIcon}
+                        component={TabOne}
+                        sceneStyle={styles.sceneDefault}
+                    />
+                </Scene>
+            </Scene>*/}
+            <Scene key="root" component={connect(state=>({authentication:state.authentication}))(Switch)} tabs={true}
+                selector={props=>props.authentication.data.authenticated ? "tabbar" : "start"}>
+                <Scene key="start" component={Start} hideNavBar={true} sceneStyle={styles.sceneStyle}/>
                 <Scene key="tabbar"
                     tabs={true}
                     tabBarStyle={styles.tabBarStyle}
